@@ -35,9 +35,6 @@ import java.util.HashMap;
 
 
 
-/**
- * @author 周智成
- */
 @Controller("chatRoomFrame")
 public class ChatRoomFrame extends JFrame {
     @Autowired

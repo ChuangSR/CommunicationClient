@@ -19,9 +19,6 @@ import java.util.HashMap;
 
 
 
-/**
- * @author 周智成
- */
 @Controller("loginFrame")
 public class LoginFrame extends JFrame {
     @Autowired
