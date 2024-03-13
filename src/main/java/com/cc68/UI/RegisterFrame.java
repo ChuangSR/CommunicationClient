@@ -16,9 +16,6 @@ import java.util.HashMap;
 
 
 
-/**
- * @author 周智成
- */
 @Controller("registerFrame")
 public class RegisterFrame extends JFrame {
     @Autowired
