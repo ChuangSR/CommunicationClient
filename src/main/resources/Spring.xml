@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="com.cc68.client.imp"/>
+    <context:component-scan base-package="com.cc68.handle.imp"/>
+    <context:component-scan base-package="com.cc68.heartbeat.imp"/>
+    <context:component-scan base-package="com.cc68.manager.imp"/>
+    <context:component-scan base-package="com.cc68.action.imp"/>
+    <context:component-scan base-package="com.cc68.UI"/>
+
+    <context:property-placeholder location="jdbc.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="config.properties" ignore-unresolvable="true"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="mybatis-config.xml"/>
+        <property name="typeAliasesPackage" value="java.lang.String"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cc68.mapper"/>
+    </bean>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <bean id="messageHandleManager" class="com.cc68.manager.imp.MessageHandleManagerImp">
+        <property name="client" ref="client"/>
+        <property name="handles">
+            <map>
+                <entry key="login" value-ref="loginHandle"/>
+                <entry key="connectTimeout" value-ref="connectTimeoutHandle"/>
+                <entry key="register" value-ref="registerHandle"/>
+                <entry key="send" value-ref="sendHandle"/>
+                <entry key="connect" value-ref="connectHandle"/>
+                <entry key="getUser" value-ref="getUserHandle"/>
+                <entry key="messageLoad" value-ref="messageLoadHandle"/>
+                <entry key="userUpdateBroadcast" value-ref="userUpdateBroadcastHandle"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="actionManager" class="com.cc68.manager.imp.ActionManagerImp">
+        <property name="client" ref="client"/>
+        <property name="action">
+            <map>
+                <entry key="login" value-ref="loginAction"/>
+                <entry key="logout" value-ref="logoutAction"/>
+                <entry key="register" value-ref="registerAction"/>
+                <entry key="send" value-ref="sendAction"/>
+                <entry key="getUser" value-ref="getUserAction"/>
+                <entry key="messageLoad" value-ref="messageLoadAction"/>
+            </map>
+        </property>
+    </bean>
+</beans>
