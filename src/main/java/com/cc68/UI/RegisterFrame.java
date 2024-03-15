@@ -36,7 +36,7 @@ public class RegisterFrame extends JFrame {
 
     private void goBefore(ActionEvent e) {
         this.dispose();
-        context.getBean("loginFrame",LoginFrame.class).setVisible(true);
+        context.getBean("loginFrame", LoginFrame.class).setVisible(true);
     }
 
     public void log(HashMap<String,Object> data){

@@ -1,14 +1,10 @@
 package com.cc68.UI;
 
-import com.alibaba.fastjson2.JSON;
-import com.cc68.action.Dao;
 import com.cc68.client.Client;
 import com.cc68.manager.DaoManager;
 import com.cc68.mapper.MessageMapper;
-import com.cc68.pojo.Message;
 import com.cc68.pojo.MessageDatabase;
 import com.cc68.pojo.Style;
-import com.cc68.util.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -27,7 +23,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 /*
  * Created by JFormDesigner on Wed Mar 06 20:32:52 CST 2024
@@ -123,7 +118,7 @@ public class ChatRoomFrame extends JFrame {
         this.userName.setText("");
         this.messageDatabases = new ArrayList<>();
         this.dispose();
-        LoginFrame loginFrame = context.getBean("loginFrame", LoginFrame.class);
+        com.cc68.UI.LoginFrame loginFrame = context.getBean("loginFrame", LoginFrame.class);
         loginFrame.setVisible(true);
     }
 
@@ -273,7 +268,6 @@ public class ChatRoomFrame extends JFrame {
         //======== this ========
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Container contentPane = getContentPane();
-
         //======== scrollPane1 ========
         {
             scrollPane1.setBorder(new BevelBorder(BevelBorder.LOWERED));

@@ -37,7 +37,7 @@ public class LoginFrame extends JFrame {
 
     private void register(ActionEvent e) {
         this.dispose();
-        context.getBean("registerFrame",RegisterFrame.class).setVisible(true);
+        context.getBean("registerFrame", RegisterFrame.class).setVisible(true);
     }
     public void log(Message message){
         HashMap<String, Object> data = message.getData();
@@ -74,7 +74,8 @@ public class LoginFrame extends JFrame {
     private void keyPressedToChatRoom(KeyEvent evt){
         int code = evt.getKeyCode();
         if(code==KeyEvent.VK_ENTER){
-            login(null);
+            this.dispose();
+            context.getBean("chatRoomFrame",ChatRoomFrame.class).setVisible(true);
         }
     }
     private void initComponents() {
@@ -93,16 +94,20 @@ public class LoginFrame extends JFrame {
         Container contentPane = getContentPane();
 
         //---- label1 ----
-        title.setText("\u7c73\u5947\u5999\u5999\u5c4b\u2642");
+        title.setText("Java\u804a\u5929\u5ba4");
         title.setFont(title.getFont().deriveFont(title.getFont().getSize() + 9f));
+        title.setIcon(new ImageIcon("\\image\\icons8-chat-room-30.png"));
+
 
         //---- label2 ----
         accountLabel.setText("\u8d26\u53f7");
         accountLabel.setFont(accountLabel.getFont().deriveFont(accountLabel.getFont().getSize() + 4f));
+        accountLabel.setIcon(new ImageIcon("\\image\\icons8-user-30(1).png"));
 
         //---- label3 ----
         passwordLabel.setText("\u5bc6\u7801");
         passwordLabel.setFont(passwordLabel.getFont().deriveFont(passwordLabel.getFont().getSize() + 4f));
+        passwordLabel.setIcon(new ImageIcon("\\image\\icons8-password-30(1).png"));
 
         //---- passwordTxt ----
         password.setEchoChar('*');
@@ -116,10 +121,12 @@ public class LoginFrame extends JFrame {
         //---- login ----
         login.setText("\u767b\u5f55");
         login.addActionListener(e -> login(e));
+        login.setIcon(new ImageIcon("\\image\\icons8-login-30(1).png"));
 
         //---- register ----
         register.setText("\u6ce8\u518c");
         register.addActionListener(e -> register(e));
+        register.setIcon(new ImageIcon("\\image\\icons8-register-30(1).png"));
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
