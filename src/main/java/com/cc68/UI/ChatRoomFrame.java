@@ -35,6 +35,10 @@ public class ChatRoomFrame extends JFrame {
     @Autowired
     private ApplicationContext context;
 //    private Object[][] users;
+    private JMenuBar menuBar1;
+    private JMenuItem unregister;
+    private JMenuItem setPassword;
+    private JMenu menu1;
     private JScrollPane scrollPane1;
     private JTable table1;
     private JScrollPane scrollPane2;
@@ -252,9 +256,49 @@ public class ChatRoomFrame extends JFrame {
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
         }
     }
+    /**
+     * 修改密码事件处理
+     * @param e
+     */
+    private void setPassword(ActionEvent e) {
+        setPasswordActionEvent(e);
+    }
 
+    private void setPasswordActionEvent(ActionEvent evt) {
+        //弹出弹窗，返回一个int类型，确认时返回0
+        int result = JOptionPane.showConfirmDialog(null,"是否修改密码？");
+        if(result==0){
+            dispose();
+            SetPasswordFrame setPasswordFrame = context.getBean("setPasswordFrame", SetPasswordFrame.class);
+            setPasswordFrame.setVisible(true);
+        }
+    }
+
+    /**
+     * 删除帐号事件处理
+     * @param e
+     */
+    private void unregister(ActionEvent e) {
+        unregisterActionEvent(e);
+    }
+
+    private void unregisterActionEvent(ActionEvent e) {
+        int result = JOptionPane.showConfirmDialog(null,"是否注销账号？");
+        if(result==0){
+            this.dispose();
+            Client client = context.getBean("client", Client.class);
+            try {
+                client.action("unregister");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            LoginFrame loginFrame = context.getBean("loginFrame", LoginFrame.class);
+            loginFrame.setVisible(true);
+        }
+    }
 
     private void initComponents() {
+        menuBar1 = new JMenuBar();
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
         scrollPane2 = new JScrollPane();
@@ -264,7 +308,10 @@ public class ChatRoomFrame extends JFrame {
         scrollPane3 = new JScrollPane();
         userName = new JLabel();
         searchbar = new JTextField();
-
+        unregister = new JMenuItem();
+        menu1 = new JMenu();
+        setPassword = new JMenuItem();
+        unregister = new JMenuItem();
         //======== this ========
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Container contentPane = getContentPane();
@@ -275,6 +322,26 @@ public class ChatRoomFrame extends JFrame {
             //---- table1 ----
             scrollPane1.setViewportView(table1);
         }
+
+        {
+
+            //======== menu1 ========
+            {
+                menu1.setText("\u8bbe\u7f6e");
+
+                //---- setPassword ----
+                setPassword.setText("\u4fee\u6539\u5bc6\u7801");
+                setPassword.addActionListener(e -> setPassword(e));
+                menu1.add(setPassword);
+
+                //---- unregister ----
+                unregister.setText("\u6ce8\u9500\u8d26\u53f7");
+                unregister.addActionListener(e -> unregister(e));
+                menu1.add(unregister);
+            }
+            menuBar1.add(menu1);
+        }
+        setJMenuBar(menuBar1);
 
         //======== scrollPane2 ========
         {
