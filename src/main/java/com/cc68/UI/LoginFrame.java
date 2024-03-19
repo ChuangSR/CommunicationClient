@@ -74,7 +74,8 @@ public class LoginFrame extends JFrame {
     private void keyPressedToChatRoom(KeyEvent evt){
         int code = evt.getKeyCode();
         if(code==KeyEvent.VK_ENTER){
-            login(null);
+            this.dispose();
+            context.getBean("chatRoomFrame",ChatRoomFrame.class).setVisible(true);
         }
     }
     private void initComponents() {
